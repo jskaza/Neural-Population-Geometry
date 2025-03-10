@@ -43,6 +43,13 @@ Moreover, the study of neural population geometry bridges biological and artific
 
 To demonstrate the emergence of geometric structures in neural representations, we implemented a simulation experiment investigating how artificial neural networks encode circular variables. This experiment provides an intuitive example of neural population geometry principles and illustrates how topological structures naturally emerge in neural representations.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{results/grating_samples.png}
+    \caption{Sample grating stimuli at different orientations.}
+    \label{fig:grating_samples}
+\end{figure}
+
 \subsubsection{Circular Manifold Experiment}
 
 We trained a convolutional neural network to predict the orientation of visual grating stimuli, a task analogous to orientation selectivity in the visual cortex. The network was presented with sinusoidal gratings at various orientations ranging from 0° to 360° and tasked with predicting the orientation angle.
@@ -50,6 +57,34 @@ We trained a convolutional neural network to predict the orientation of visual g
 The architecture consisted of convolutional layers followed by fully connected layers, with a 32-dimensional latent space that we analyzed for geometric properties. Importantly, the network was trained to predict the sine and cosine components of the orientation angle rather than the raw angle, which naturally handles the circular topology of the orientation space (where 0° and 360° are identical).
 
 After training, we extracted the 32-dimensional latent representations for test stimuli and applied dimensionality reduction techniques (PCA, t-SNE, and UMAP) to visualize the structure of these representations. The results revealed a striking circular manifold in the latent space, where stimuli with similar orientations were positioned close together, and the entire orientation space was represented as a continuous ring.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{results/pca_latent_space.png}
+    \caption{PCA of the latent space showing the circular manifold.}
+    \label{fig:pca_latent_space}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{results/tsne_latent_space.png}
+    \caption{t-SNE of the latent space showing the circular manifold.}
+    \label{fig:tsne_latent_space}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{results/umap_latent_space.png}
+    \caption{UMAP of the latent space showing the circular manifold.}
+    \label{fig:umap_latent_space}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{results/3d_manifold.png}
+    \caption{3D PCA of the latent space.}
+    \label{fig:3d_manifold}
+\end{figure}
 
 This circular topology emerged naturally from the training process, despite no explicit topological constraints being imposed on the network. The network discovered that a circular representation is the most efficient way to encode a periodic variable, demonstrating how the geometry of the task space (in this case, the circular nature of orientation angles) becomes reflected in the geometry of the neural representations.
 
@@ -62,7 +97,21 @@ The experiment highlights several key principles of neural population geometry:
     \item \textbf{Dimensionality reduction}: The network learns to compress the high-dimensional input (grating images) into a low-dimensional representation that captures the essential variable (orientation).
 \end{itemize}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{results/pca_fitted_circle.png}
+    \caption{PCA with a fitted circle showing the circular topology.}
+    \label{fig:pca_fitted_circle}
+\end{figure}
+
 This simple experiment provides an intuitive foundation for understanding how more complex neural networks might represent more complicated manifolds in their latent spaces, and how the geometry of these representations relates to the computational tasks being performed.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{results/training_loss.png}
+    \caption{Training loss over epochs.}
+    \label{fig:training_loss}
+\end{figure}
 
 \subsection{Biological Neural Networks}
 
