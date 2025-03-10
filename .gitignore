@@ -1,1 +1,13 @@
 .conda
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.dvi
+*.snm
+*.nav
+*.fdb_latexmk
+*.fls
+*.cursor/*
