@@ -39,6 +39,32 @@ Moreover, the study of neural population geometry bridges biological and artific
 \section{Neural Population Geometry}
 
 \section{Simulation}
+\subsection{Artificial Neural Networks}
+
+To demonstrate the emergence of geometric structures in neural representations, we implemented a simulation experiment investigating how artificial neural networks encode circular variables. This experiment provides an intuitive example of neural population geometry principles and illustrates how topological structures naturally emerge in neural representations.
+
+\subsubsection{Circular Manifold Experiment}
+
+We trained a convolutional neural network to predict the orientation of visual grating stimuli, a task analogous to orientation selectivity in the visual cortex. The network was presented with sinusoidal gratings at various orientations ranging from 0° to 360° and tasked with predicting the orientation angle.
+
+The architecture consisted of convolutional layers followed by fully connected layers, with a 32-dimensional latent space that we analyzed for geometric properties. Importantly, the network was trained to predict the sine and cosine components of the orientation angle rather than the raw angle, which naturally handles the circular topology of the orientation space (where 0° and 360° are identical).
+
+After training, we extracted the 32-dimensional latent representations for test stimuli and applied dimensionality reduction techniques (PCA, t-SNE, and UMAP) to visualize the structure of these representations. The results revealed a striking circular manifold in the latent space, where stimuli with similar orientations were positioned close together, and the entire orientation space was represented as a continuous ring.
+
+This circular topology emerged naturally from the training process, despite no explicit topological constraints being imposed on the network. The network discovered that a circular representation is the most efficient way to encode a periodic variable, demonstrating how the geometry of the task space (in this case, the circular nature of orientation angles) becomes reflected in the geometry of the neural representations.
+
+The experiment highlights several key principles of neural population geometry:
+
+\begin{itemize}
+    \item \textbf{Manifold structure}: The network's internal representations form a low-dimensional manifold (a circle) embedded in the high-dimensional latent space.
+    \item \textbf{Topological correspondence}: The topology of the manifold (circular) matches the topology of the task space (orientation angles).
+    \item \textbf{Continuous representation}: Similar stimuli are mapped to nearby points on the manifold, preserving the continuity of the input space.
+    \item \textbf{Dimensionality reduction}: The network learns to compress the high-dimensional input (grating images) into a low-dimensional representation that captures the essential variable (orientation).
+\end{itemize}
+
+This simple experiment provides an intuitive foundation for understanding how more complex neural networks might represent more complicated manifolds in their latent spaces, and how the geometry of these representations relates to the computational tasks being performed.
+
+\subsection{Biological Neural Networks}
 
 \section{Conclusion}
 
