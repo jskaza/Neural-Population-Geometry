@@ -1,0 +1,48 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{graphicx}
+\usepackage{authblk}
+\author[1]{Santiago Acosta\thanks{santiago\_acosta@ucsb.edu}}
+\author[1]{Jonathan Skaza\thanks{skaza@ucsb.edu}}
+\affil[1]{Dynamical Neuroscience Graduate Program, University of California, Santa Barbara}
+\title {Neural Population Geometry \\[1ex] \large ME 225NN, Winter 2025}
+\date{}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+
+\subsection{Problem Description \& Motivation}
+
+Experimental neuroscience has seen rapid advances in recording techniques, with the ability to record from thousands of (and possibly a million~\cite{demas2021high}) neurons simultaneously. In the realm of theoretical neuroscience, these advancements have sparked a concerted effort toward the development of methodologies for the analysis of neural systems or populations of neurons. Studying large neural populations presents a unique set of challenges, as neurons often respond to multiple variables at once, making their roles more difficult to interpret. Additionally, real-world tasks require robustness to complex variability, which may limit the usefulness of traditional tuning-based analyses.
+
+In consideration of these factors, the focus of neural population analysis has transitioned from single-neuron tuning to geometric approaches that consider population-level representations~\cite{yuste2015neuron, saxena2019towards}. The rationale behind this shift is that neural computations arise from structured, high-dimensional activity patterns rather than isolated responses of individual neurons. These patterns have been cleverly conceptualized as neural manifolds---low-dimensional geometric structures embedded in high-dimensional neural state space. The properties of these manifolds, including their dimensionality, curvature, and separability, provide insights into the computational principles governing networks of neurons ~\cite{chung2021neural}.
+
+This report centers around the application of geometric techniques in the analysis of large populations of neurons, a field referred to as \textit{neural population geometry}. We discuss how this framework has provided mechanistic insights into perception, decision-making, motor control, and cognition. Furthermore, we explore the parallels between biological neural circuits and artificial neural networks (ANNs), where similar geometric principles govern representational efficiency and generalization. By framing neural computation in terms of geometric transformations, we highlight how population-level representations contribute to robust, efficient, and scalable information processing.
+
+\subsection{Literature Review}
+\subsection{Summary}
+Neural population geometry provides a powerful framework for analyzing large-scale neural activity by leveraging geometric principles to describe population-level representations. This approach has yielded mechanistic insights into various domains, including perception, decision-making, motor control, and cognition. By examining the structure and transformations of neural manifolds, researchers have uncovered fundamental constraints and computational strategies underlying neural function.
+
+Moreover, the study of neural population geometry bridges biological and artificial neural networks (ANNs), revealing shared representational structures that support efficient and generalizable computation. In both domains, geometric properties such as dimensionality, curvature, and separability shape the ability of neural systems to encode and process information. By adopting a geometric perspective, we gain a deeper understanding of how neural populations achieve robustness, efficiency, and scalability in complex tasks.
+
+\section{Preliminaries}
+\subsection{Neural State Space \& Population Activity}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{manifold_schematic.png}
+    \caption{A neural manifold is formed by plotting neural activity (e.g., firing rate) in state space, where each axis is a single neuron. Note that the repeated presentation of the same stimulus does not lead to the occupancy of an identical point within the state space. Rather, neuronal variability induces fluctuations in the points derived from different trials. Consequently, each stimulus is associated not with a single point but with a point cloud, the dimensions and configuration of which are contingent upon the magnitude and nature of the neuronal variability. One may be interested in the manifold that emerges in response to a particular stimulus or whether there is separability among manifolds from multiple stimuli. Figure from \cite{Perich2024}.}
+    \label{fig:manifolds}
+\end{figure}
+
+
+\section{Neural Population Geometry}
+
+\section{Simulation}
+
+\section{Conclusion}
+
+\bibliographystyle{unsrt}
+\bibliography{refs}
+
+\end{document}
