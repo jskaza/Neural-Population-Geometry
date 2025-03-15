@@ -11,4 +11,5 @@
 *.fdb_latexmk
 *.fls
 *.cursor/*
-slides.*
+*slides
+*.synctex.gz
