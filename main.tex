@@ -164,7 +164,7 @@ We trained a CNN to predict the angle of orientation, $\theta$, of visual gratin
     \label{fig:grating_samples}
 \end{figure}
 
-The architecture consisted of convolutional layers followed by fully connected layers, with a 32-dimensional latent space that we analyzed for geometric properties. Importantly, the network was trained to predict the sine and cosine components of the orientation angle rather than the raw angle, which naturally handles the circular topology of the orientation space\footnote{For example, for small $\epsilon$, the angles of $\epsilon$ and $2\pi - \epsilon$ are nearly identical orientations but numerically distant. Using sine-cosine encoding, these angles map to points $(\cos(\epsilon), \sin(\epsilon)) \approx (\cos(2\pi-\epsilon), \sin(2\pi - \epsilon)) \approx (1, 0)$, i.e., the orientations become close in Euclidean space, better reflecting their similarity.}.
+The architecture consisted of convolutional layers followed by fully connected layers, with a 388-dimensional latent space that we analyzed for geometric properties. Importantly, the network was trained to predict the sine and cosine components of the orientation angle rather than the raw angle, which naturally handles the circular topology of the orientation space\footnote{For example, for small $\epsilon$, the angles of $\epsilon$ and $2\pi - \epsilon$ are nearly identical orientations but numerically distant. Using sine-cosine encoding, these angles map to points $(\cos(\epsilon), \sin(\epsilon)) \approx (\cos(2\pi-\epsilon), \sin(2\pi - \epsilon)) \approx (1, 0)$, i.e., the orientations become close in Euclidean space, better reflecting their similarity.}.
 
 \begin{figure}
     \centering
@@ -228,10 +228,10 @@ The architecture consisted of convolutional layers followed by fully connected l
     \node[below=0.01cm of output_norm, font=\footnotesize] {(sin $\theta$, cos $\theta$)};
 
     \end{tikzpicture}
-    \caption{Neural network architecture used for the circular manifold experiment. The network processes grating stimuli through convolutional layers, followed by fully connected layers that produce a 32-dimensional latent space. The output layer predicts raw values that are then normalized to the unit circle to represent the sine and cosine of the orientation angle, ensuring the circular topology is preserved.}
+    \caption{Neural network architecture used for the circular manifold experiment. The network processes grating stimuli through convolutional layers, followed by fully connected layers that produce a 388-dimensional latent space. The output layer predicts raw values that are then normalized to the unit circle to represent the sine and cosine of the orientation angle, ensuring the circular topology is preserved.}
 \end{figure}
 
-After training, we extracted the 32-dimensional latent representations for test stimuli and applied dimensionality reduction techniques (PCA, Isomap, and MDE) to visualize the structure of these representations. The results revealed a striking circular manifold in the latent space, where stimuli with similar orientations were positioned close together, and the entire orientation space was represented as a continuous ring.
+After training, we extracted the 388-dimensional latent representations for test stimuli and PCA to visualize the structure of these representations. The results revealed a striking circular manifold in the latent space, where stimuli with similar orientations were positioned close together, and the entire orientation space was represented as a continuous ring.
 
 \begin{figure}
     \centering
