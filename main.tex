@@ -131,6 +131,25 @@ The geometric properties of neural manifolds provide insights into the computati
 
 \section{Mouse Experiment}
 
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{results/mouse_circular_colormap_visualization.pdf}
+        % \caption{Circular colormap visualization of the latent space, showing how orientation angles map continuously onto the manifold.}
+        \label{fig:mouse_colormap}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{results/mouse_circular_regression.pdf}
+        % \caption{Circular regression analysis demonstrating the relationship between true orientation angles and their position on the manifold.}
+        \label{fig:mouse_regression}
+    \end{subfigure}
+
+    \label{fig:mouse_manifold_analysis}
+\end{figure}
+
 \section{Simulation Study}
 
 To demonstrate the emergence of geometric structures in neural representations of ANNs, we implemented a simulation experiment investigating how ANNs encode ``circular variables''. This experiment provides an example of neural population geometry principles and illustrates how topological structures may naturally emerge in neural representations in response to the nature of the task.
@@ -138,7 +157,7 @@ To demonstrate the emergence of geometric structures in neural representations o
 
 We trained a CNN to predict the angle of orientation, $\theta$, of visual grating stimuli, a task analogous to orientation selectivity in the visual cortex. The network was presented with sinusoidal gratings at various orientations ranging from 0 to $2\pi$ rad and tasked with predicting the orientation angle. Fig. \ref{fig:grating_samples} contains example stimuli.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \includegraphics[width=\linewidth]{results/grating_samples.pdf}
     \caption{Sample grating stimuli at different orientations.}
@@ -147,7 +166,7 @@ We trained a CNN to predict the angle of orientation, $\theta$, of visual gratin
 
 The architecture consisted of convolutional layers followed by fully connected layers, with a 32-dimensional latent space that we analyzed for geometric properties. Importantly, the network was trained to predict the sine and cosine components of the orientation angle rather than the raw angle, which naturally handles the circular topology of the orientation space\footnote{For example, for small $\epsilon$, the angles of $\epsilon$ and $2\pi - \epsilon$ are nearly identical orientations but numerically distant. Using sine-cosine encoding, these angles map to points $(\cos(\epsilon), \sin(\epsilon)) \approx (\cos(2\pi-\epsilon), \sin(2\pi - \epsilon)) \approx (1, 0)$, i.e., the orientations become close in Euclidean space, better reflecting their similarity.}.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \begin{tikzpicture}[
         node distance=1.2cm,
@@ -183,8 +202,9 @@ The architecture consisted of convolutional layers followed by fully connected l
     \node[box, right=of flatten] (fc1) {Linear\\$\rightarrow$ 128};
     
     % Second row of FC layers
-    \node[box, below=0.8cm of conv2] (fc2) {Linear\\$\rightarrow$ 32};
-    \node[box, right=of fc2] (output) {Linear\\$\rightarrow$ 2\\(sin $\theta$, cos $\theta$)};
+    \node[box, below=0.8cm of conv2] (fc2) {Linear\\$\rightarrow$ 388};
+    \node[box, right=of fc2] (output_raw) {Linear\\$\rightarrow$ 2};
+    \node[box, right=of output_raw] (output_norm) {Normalize\\to unit circle};
 
     % Connections - modified to create column-like flow
     \draw[arrow] (input) -- (conv1);
@@ -198,29 +218,38 @@ The architecture consisted of convolutional layers followed by fully connected l
     
     % Modified connection to go down and then across
     \draw[arrow] (fc1) -- ++(0,-0.8cm) -| (fc2);
-    \draw[arrow] (fc2) -- (output);
+    \draw[arrow] (fc2) -- (output_raw);
+    \draw[arrow] (output_raw) -- (output_norm);
 
     % Add dimensions as labels
     \node[above=0.01cm of pool1, font=\footnotesize] {14$\times$14$\times$16};
     \node[above=0.01cm of pool2, font=\footnotesize] {7$\times$7$\times$32};
-    \node[below=0.01cm of fc2, font=\footnotesize] {Latent Space};
-
-    % % Add a note about the latent space
-    % \node[below=0.4cm of fc2, align=center, text width=3.5cm, font=\footnotesize] 
-    %     {Circular manifold emerges in 32D latent space};
+    \node[below=0.01cm of fc2, font=\footnotesize] {Latent Space  = OS Neurons};
+    \node[below=0.01cm of output_norm, font=\footnotesize] {(sin $\theta$, cos $\theta$)};
 
     \end{tikzpicture}
-    \caption{Neural network architecture used for the circular manifold experiment. The network processes grating stimuli through convolutional layers, followed by fully connected layers that produce a 32-dimensional latent space. The output layer predicts the sine and cosine of the orientation angle.}
+    \caption{Neural network architecture used for the circular manifold experiment. The network processes grating stimuli through convolutional layers, followed by fully connected layers that produce a 32-dimensional latent space. The output layer predicts raw values that are then normalized to the unit circle to represent the sine and cosine of the orientation angle, ensuring the circular topology is preserved.}
 \end{figure}
 
 After training, we extracted the 32-dimensional latent representations for test stimuli and applied dimensionality reduction techniques (PCA, Isomap, and MDE) to visualize the structure of these representations. The results revealed a striking circular manifold in the latent space, where stimuli with similar orientations were positioned close together, and the entire orientation space was represented as a continuous ring.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
+    \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{results/dim_reduction_combined.pdf}
-        \caption{Dimensionality reduction of the CNN's 32-dimensional latent space representations reveals a circular manifold structure. Each point along the curve represents a grating stimulus, colored according to its true orientation angle. The three techniques (PCA, Isomap, and MDS) all recover the circular topology, demonstrating that the network has learned to encode the periodic orientation variable as a ring-shaped manifold. Blue arrows indicate the direction of increasing orientation angle along the manifold.}
-    \label{fig:pca_latent_space}
+        \includegraphics[width=\textwidth]{results/ann_circular_colormap_visualization.pdf}
+        % \caption{Circular colormap visualization of the latent space, showing how orientation angles map continuously onto the manifold.}
+        \label{fig:circular_colormap}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{results/ann_circular_regression.pdf}
+        % \caption{Circular regression analysis demonstrating the relationship between true orientation angles and their position on the manifold.}
+        \label{fig:circular_regression}
+    \end{subfigure}
+    \caption{Analysis of the circular manifold in the CNN's latent space. The network spontaneously learns to represent orientation as a ring-shaped manifold, where similar orientations are positioned close together and the full range of orientations forms a closed loop. This geometric structure emerges naturally from the training process, reflecting the circular topology of the orientation space. The continuous mapping between orientation angles and positions on the manifold demonstrates how the network has learned to encode this periodic variable in a topologically appropriate manner.}
+    \label{fig:manifold_analysis}
 \end{figure}
 
 This circular topology emerged naturally from the training process, despite no explicit topological constraints being imposed on the network. Through backpropagation, the network discovered that a circular representation is the most efficient way to encode a periodic variable, demonstrating how the geometry of the task space (in this case, the circular nature of orientation angles) becomes reflected in the geometry of the neural representations.
