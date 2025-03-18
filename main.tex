@@ -32,6 +32,13 @@ A compelling aspect of the neural manifold framework is its ability to link geom
 This report examines the application of geometric techniques to analyze large neuronal populations—a field known as \textit{neural population geometry}. This framework provides a unified approach for understanding both biological neural circuits and artificial neural networks (ANNs). By conceptualizing neural computation as geometric transformations, we can analyze how population-level representations enable robust, efficient, and scalable information processing across biological and artificial systems. This parallel analysis reveals fundamental computational principles that transcend the specific implementation details of different neural architectures.
 
 \subsection{Literature Review}
+
+The study of neural population geometry has emerged at the intersection of neuroscience, machine learning, and computational topology. Early work demonstrated that dimensionality reduction techniques could reveal latent structure in neural population activity, providing insights into low-dimensional dynamics underlying behavior~\cite{cunningham2014dimensionality}. This led to the discovery that neural activity during movement resides on structured manifolds shaped by motor control principles~\cite{gallego2017neural}.
+
+Beyond low-dimensional embeddings, recent research has emphasized the topological constraints of neural representations. For example, grid cell activity in the entorhinal cortex forms toroidal manifolds, capturing the periodicity of spatial coding~\cite{gardner2022toroidal}. Similarly, circular variables such as orientation and head direction exhibit ring-like manifolds, highlighting intrinsic topological structure in neural data~\cite{chaudhuri2019intrinsic}.
+
+Parallel efforts in artificial systems have leveraged geometric frameworks to compare neural representations across biological and deep networks. These studies suggest that both systems optimize for efficient, low-dimensional embeddings that reflect task-relevant transformations~\cite{chung2021neural}. Such findings point to shared geometric principles underlying neural computation, independent of biological implementation.
+
 \subsection{Summary}
 In this paper, we demonstrate how neural population geometry provides a unified framework for understanding information encoding in both biological and artificial neural systems. We focus specifically on the representation of circular variables—a fundamental computational challenge that requires preserving topological structure. Through parallel analyses of orientation encoding in the mouse visual cortex and a trained convolutional neural network (CNN), we show how similar ring-shaped manifolds emerge in both systems despite their different implementations.
 
@@ -224,7 +231,7 @@ The architecture consisted of convolutional layers followed by fully connected l
     % Add dimensions as labels
     \node[above=0.01cm of pool1, font=\footnotesize] {14$\times$14$\times$16};
     \node[above=0.01cm of pool2, font=\footnotesize] {7$\times$7$\times$32};
-    \node[below=0.01cm of fc2, font=\footnotesize] {Latent Space  = OS Neurons};
+    \node[below=0.01cm of fc2, font=\footnotesize] {Latent Space  = \# OS Neurons};
     \node[below=0.01cm of output_norm, font=\footnotesize] {(sin $\theta$, cos $\theta$)};
 
     \end{tikzpicture}

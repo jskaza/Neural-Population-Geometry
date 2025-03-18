@@ -231,12 +231,26 @@ def visualize_circular_colormap(orientations, embedding, results_dir, prefix="")
                   head_width=arrow_length*0.4, head_length=arrow_length*0.6,
                   fc='blue', ec='blue', alpha=0.7)
     
-    # Add orientation labels for all points
+    # Add orientation labels with jittering to prevent overlap
+    # Calculate the average distance between points to determine jitter scale
+    distances = []
+    for i in range(len(sorted_data) - 1):
+        distances.append(np.linalg.norm(sorted_data[i+1] - sorted_data[i]))
+    jitter_scale = np.mean(distances) * 0.2  # Use 20% of average distance for jitter
+    
+    # Use angle-based jittering to spread labels out
     for i, angle in enumerate(sorted_orientations):
-        plt.text(sorted_data[i, 0], sorted_data[i, 1], 
+        # Convert angle to radians for positioning calculation
+        theta = np.deg2rad(angle)
+        # Apply small offset based on angle
+        x_jitter = jitter_scale * np.cos(theta)
+        y_jitter = jitter_scale * np.sin(theta)
+        
+        # Position text with jitter and slight outward offset
+        plt.text(sorted_data[i, 0] + x_jitter, sorted_data[i, 1] + y_jitter, 
                f"${int(angle)}^\\circ$", 
-               fontsize=8, ha='center', va='bottom',
-               bbox=dict(facecolor='white', alpha=0.7, edgecolor='none'))
+               fontsize=8, ha='center', va='center',
+               bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1))
     
     # Add a colorbar with orientation ticks below the plot
     # Adjust the figure to make room for the colorbar

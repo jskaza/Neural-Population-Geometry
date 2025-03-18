@@ -45,7 +45,7 @@ class Config:
     latent_dim = None
     
     # Device
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = 'cpu' # torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     # Visualization
     results_dir = 'results'
