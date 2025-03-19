@@ -1,10 +1,11 @@
 # Neural Network and Biological Neural Circuit Circular Manifold Simulation
 
-This project simulates a neural network learning to predict the orientation of grating stimuli and analyzes the geometry and topology of the network's internal representations to uncover a circular manifold. Additionally, it examines similar structures in biological neural circuits using mouse visual cortex data.
+
+This is a class project for *ME 225NN: Modeling and Optimization of Neural Networks* at UC Santa Barbara and is based on [Chung & Abbott (2021)](https://www.sciencedirect.com/science/article/pii/S0959438821001227#bib32). We simulate a neural network learning to predict the orientation of grating stimuli and analyze the geometry and topology of the network's internal representations to uncover a circular manifold. Additionally, it examines similar structures in biological neural circuits using mouse visual cortex recordings.
 
 ## Overview
 
-The project demonstrates how both artificial and biological neural networks encode circular data (orientation angles from 0° to 360°) in their latent spaces. The key insight is that these networks should learn representations that capture the circular topology of the orientation space.
+The project demonstrates how both artificial and biological neural networks encode circular data (orientation angles from 0° to 360°) in their latent spaces. See `main.pdf` for the write-up.
 
 ## Features
 
@@ -33,25 +34,4 @@ The project requires Python 3.6+ and the following packages:
 
 For LaTeX rendering in plots, ensure LaTeX is installed on your system.
 
-## Usage
 
-1. Install the required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. Run the simulation:
-   ```bash
-   python ann_manifold_simulation.py
-   python neuron_manifold_analysis.py
-   ```
-
-3. Check the `results` directory for visualizations and analysis outputs.
-
-## Visualizations
-
-The simulation generates several visualizations:
-- Sample grating stimuli at different orientations
-- 2D projections of the latent space
-- PCA projection with a fitted circle to demonstrate the circular structure
-- Analysis of mouse visual cortex data showing similar circular manifolds
