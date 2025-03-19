@@ -12,7 +12,11 @@ torch>=1.10.0
 # Progress bars and utilities
 tqdm>=4.62.0
 
-
+# Additional packages
+umap-learn
+ripser
+persim
+gudhi
 
 # For LaTeX rendering in plots
 # Note: Requires LaTeX to be installed on the system
