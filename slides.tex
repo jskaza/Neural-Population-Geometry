@@ -2,9 +2,12 @@
 \usetheme{metropolis}
 \setbeamertemplate{frame footer}{\includegraphics[height=0.25cm]{figs/UC_Santa_Barbara}}
 \usepackage{graphicx}
-\usepackage{subcaption}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usetikzlibrary{positioning,arrows.meta}
+
 
 % Title information
 \title[Neural Population Geometry]{Neural Population Geometry}
@@ -28,263 +31,205 @@
 % Introduction section
 \section{Introduction}
 
-\begin{frame}{Problem Description \& Motivation}
+\begin{frame}{Problem description \& motivation}
     \begin{itemize}
-        \item Advances in recording techniques: thousands to millions of neurons simultaneously
-        \item Challenges in studying large neural populations:
+        \item Common to record thousands of neurons simultaneously
+        \item Challenges in studying large neural populations
         \begin{itemize}
             \item Neurons respond to multiple variables simultaneously
             \item Traditional tuning-based analyses have limitations for complex tasks
         \end{itemize}
-        \item Shift from single-neuron tuning to \textit{geometric} approaches
-        \item Neural computations emerge from structured, high-dimensional activity patterns
-        \item Neural manifolds: low-dimensional geometric structures in high-dimensional neural state space
+        \item \textit{From the neuron doctrine to neural networks} \cite{yuste2015neuron}
+        \begin{itemize}
+            \item ``Using dimensionality reduction methods, dynamical systems analysis, information theoretic frameworks and a rich variety of other novel theoretical tools, researchers can visualize and understand multidimensional neuronal dynamics in ways that enable them to probe brain circuits at the multicellular level.''
+        \end{itemize}
+        \item \textit{Neural population geometry: An approach for understanding biological and artificial neural networks} \cite{chung2021neural}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Neural Manifolds}
-    \begin{itemize}
-        \item Key properties of neural manifolds:
-        \begin{itemize}
-            \item Dimensionality: intrinsic dimensions of the representation
-            \item Curvature: how the manifold deviates from flat space
-            \item Separability: distinguishability between different manifolds
-            \item Capacity: number of distinct manifolds a system can support
-        \end{itemize}
-        \item Examples of manifold structures in the brain:
-        \begin{itemize}
-            \item Ring-shaped manifolds in hippocampus (head direction)
-            \item Ring-shaped manifolds in visual cortex (orientation)
-        \end{itemize}
-        \item Direct mappings between manifold geometry and task variables provide mechanistic insights
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Bridging Biological and Artificial Neural Networks}
-    \begin{itemize}
-        \item Neural population geometry provides a unified framework for understanding:
-        \begin{itemize}
-            \item Biological neural circuits
-            \item Artificial neural networks (ANNs)
-        \end{itemize}
-        \item Neural computation as geometric transformations
-        \item Population-level representations enable:
-        \begin{itemize}
-            \item Robust information processing
-            \item Efficient encoding
-            \item Scalable computation
-        \end{itemize}
-        \item Reveals fundamental principles that transcend specific implementations
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Paper Summary}
-    \begin{itemize}
-        \item We demonstrate neural population geometry as a unified framework for understanding information encoding
-        \item Focus on representation of circular variables—a fundamental computational challenge
-        \item Parallel analyses of:
-        \begin{itemize}
-            \item Orientation encoding in mouse visual cortex
-            \item Trained convolutional neural network (CNN)
-        \end{itemize}
-        \item Show how similar ring-shaped manifolds emerge in both systems
-        \item Circular manifolds arise from computational demands rather than architectural constraints
-        \item Comparative approach reveals common principles across biological and artificial systems
-    \end{itemize}
-\end{frame}
-
-% Preliminaries section
-\section{Preliminaries}
-
-\begin{frame}{Neural State Space \& Population Activity}
+\begin{frame}{Neural state space \& population activity}
     \begin{columns}
         \column{0.5\textwidth}
         \begin{itemize}
-            \item Neural state space: each axis represents a single neuron
-            \item Population activity: $\mathbf{r} = (r_1, r_2, \ldots, r_n) \in \mathbb{R}^n$
-            \item Repeated stimulus presentations create point clouds
-            \item Neural variability induces fluctuations
-            \item Manifolds emerge from stimulus responses
+            \item \textbf{Neural state space} each axis represents a single neuron
+            \item Population activity $\mathbf{r} = (r_1, r_2, \ldots, r_n) \in \mathbb{R}^n$
+            \item Repeated stimulus presentations \& neural variability create \textbf{point clouds}
+            \item \textbf{Neural manifolds} emerge from stimulus responses
         \end{itemize}
         
         \column{0.5\textwidth}
-        \includegraphics[width=\textwidth]{figs/manifold_schematic.png}
+        \begin{center}
+            \includegraphics[width=\textwidth]{figs/manifold_schematic.png}
+            \cite{Perich2024}
+        \end{center}
     \end{columns}
 \end{frame}
 
-\begin{frame}{Mathematical Foundations of Neural Manifolds}
+\begin{frame}{}
+\textbf{Neural population geometry} refers to the configurations of these \textbf{neural manifolds} embedded in ambient \textbf{neural state space}~\cite{chung2021neural}
+\end{frame}
+
+\begin{frame}{Neural manifold formalism}
     \begin{itemize}
-        \item \textbf{Manifold}: Topological space that locally resembles Euclidean space
-        \item \textbf{Neural manifold}: Population activity constrained to lower-dimensional subspace
-        \item Formal definition: For stimulus condition $s$, the neural manifold $\mathcal{M}_s$ is:
-        \begin{equation}
-        \mathcal{M}_s = \{\mathbf{r}(t) \in \mathbb{R}^n : \text{condition } s \text{ is presented at time } t\}
-        \end{equation}
-        \item Real neural data extends beyond strict mathematical definition:
-        \begin{itemize}
-            \item Neural variability creates point clouds rather than isolated points
-            \item Experimental limitations lead to sparse sampling of the manifold
-        \end{itemize}
+       \item $m$-dimensional manifold $\mathcal{M}$ is a topological space where each point $p \in \mathcal{M}$ has a neighborhood $U$ that is homeomorphic to an open subset of $\mathbb{R}^m$
+       \item Let $\mathbf{r} = (r_1, r_2, \ldots, r_n) \in \mathbb{R}^n$ represent the firing rates of $n$ neurons at a given time. The neural manifold hypothesis posits that, during specific task execution, these population activity patterns do not explore the entire $n$-dimensional space but instead are constrained to a lower-dimensional subspace or manifold $\mathcal{M} \subset \mathbb{R}^n$, where typically $\dim(\mathcal{M}) \ll n$.
+       \item E.g.,  
+        $\mathcal{M}_{\text{obj}} = \{f(T_\theta(\mathbf{x})) : \theta \in \Theta\}$, $\mathbf{x} \in \mathbb{R}^d$ represents a stimulus and $T_\theta: \mathbb{R}^d \rightarrow \mathbb{R}^d$ represents a transformation with parameter $\theta$
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Types of Neural Manifolds}
+\begin{frame}{Considerations for neural manifolds}
     \begin{itemize}
-        \item \textbf{Object/perceptual manifolds}: Arise from identity-preserving variations
-        \begin{equation}
-        \mathcal{M}_{\text{obj}} = \{f(T_\theta(\mathbf{x})) : \theta \in \Theta\}
-        \end{equation}
-        where $f$ is neural encoding function, $T_\theta$ is transformation with parameter $\theta$
+        \item \textbf{Neural variability}
+        \begin{itemize}
+       \item Neural responses vary due to stochastic processes in neural firing
+       \item  Point clouds (clusters of points for each stimulus) define the empirical neural manifold
+    \end{itemize}
+        \item \textbf{Sparse sampling}
+        \begin{itemize}
+            \item Experimental limitations often allow only a finite sampling of possible stimuli or conditions leading to discrete approximation of continuous manifold
+        \end{itemize} 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Neural manifold analysis methods}
+    \begin{itemize}
+        \item \textbf{Linear dimensionality reduction}: PCA
         
-        \item \textbf{Point-cloud manifolds}: Empirical manifestation in experimental data
-        \begin{equation}
-        \hat{\mathcal{M}} = \{\mathbf{r}_i : i = 1, 2, \ldots, k\}
-        \end{equation}
-        for stimuli $\{s_1, s_2, \ldots, s_k\}$ and responses $\{\mathbf{r}_1, \mathbf{r}_2, \ldots, \mathbf{r}_k\}$
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Manifold Estimation Techniques}
-    \begin{itemize}
-        \item \textbf{Linear dimensionality reduction}:
-        \begin{itemize}
-            \item Principal Component Analysis (PCA)
-            \item Efficient but misses nonlinear structure
-        \end{itemize}
+        \item \textbf{Nonlinear dimensionality reduction}: Isomap~\cite{tenenbaum2000global}, Locally Linear Embedding (LLE)~\cite{roweis2000nonlinear}, t-SNE~\cite{vandermaaten2008visualizing}, Multidimensional Scaling (MDS)~\cite{kruskal1964multidimensional}, PHATE~\cite{moon2019visualizing}, and UMAP~\cite{mcinnes2018umap}
         
-        \item \textbf{Nonlinear dimensionality reduction}:
-        \begin{itemize}
-            \item Isomap, t-SNE, MDS, UMAP, etc.
-            \item Preserve geometric relationships
-            \item May fail with complex topological structures
-        \end{itemize}
+        \item \textbf{Geometric approximation methods}: Convex hulls
         
-        \item \textbf{Topologically-motivated methods}:
-        \begin{itemize}
-            \item SPUD (Spline Parameterization for Unsupervised Decoding)
-            \item Persistent homology
-            \item Essential for circular or toroidal structures
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-% Neural Population Geometry section
-\section{Neural Population Geometry}
-
-\begin{frame}{Key Concepts in Neural Population Geometry}
-    \begin{itemize}
-        \item \textbf{Dimensionality}: Intrinsic dimensionality $d$ of manifold $\mathcal{M}$
-        \begin{itemize}
-            \item Estimated using PCA or nonlinear methods
-        \end{itemize}
+        \item \textbf{Topologically-motivated methods}: Spline Parameterization for Unsupervised Decoding (SPUD)~\cite{chaudhuri2019intrinsic} 
         
-        \item \textbf{Curvature}: How manifold deviates from flat space
-        \begin{itemize}
-            \item High curvature: small stimulus changes → large neural response changes
-        \end{itemize}
+        \item \textbf{Dynamics-based approaches}: Manifold Inference from Neural Dynamics (MIND)~\cite{low2018probing}
         
-        \item \textbf{Separability}: Distinguishability between manifolds
-        \begin{equation}
-        d(\mathcal{M}_i, \mathcal{M}_j) = \min_{\mathbf{r}_i \in \mathcal{M}_i, \mathbf{r}_j \in \mathcal{M}_j} \|\mathbf{r}_i - \mathbf{r}_j\|
-        \end{equation}
         
-        \item \textbf{Capacity}: Number of distinct manifolds a neural system can support
+        \item \textbf{Density-based approaches}: Kernel Density Estimation (KDE)
     \end{itemize}
 \end{frame}
 
-% Simulation section
-\section{Simulation Study}
-
-\begin{frame}{Circular Variables Experiment}
-    \begin{itemize}
-        \item Demonstration of geometric structures in neural representations
-        \item Simulation experiment: encoding circular variables
-        \item Illustrates how topological structures naturally emerge
-        \item CNN trained to predict orientation of visual grating stimuli
-        \item Analogous to orientation selectivity in visual cortex
-    \end{itemize}
-    \includegraphics[width=0.7\textwidth]{results/grating_samples.pdf}
-    \captionof{figure}{Sample grating stimuli at different orientations}
-\end{frame}
-
-\begin{frame}{CNN Architecture}
-    \begin{itemize}
-        \item Convolutional layers followed by fully connected layers
-        \item 32-dimensional latent space analyzed for geometric properties
-        \item Network trained to predict sine and cosine components of orientation angle
-        \item Sine-cosine encoding naturally handles circular topology
-        \begin{itemize}
-            \item For small $\epsilon$, angles $\epsilon$ and $2\pi - \epsilon$ are similar orientations
-            \item But numerically distant in raw angle representation
-            \item With sine-cosine: $(\cos(\epsilon), \sin(\epsilon)) \approx (\cos(2\pi-\epsilon), \sin(2\pi - \epsilon)) \approx (1, 0)$
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Results: Circular Manifold}
-    \centering
-    \includegraphics[width=\linewidth]{results/dim_reduction_combined.pdf}
-    \captionof{figure}{Dimensionality reduction of the CNN's latent space reveals a circular manifold. Each point represents a grating stimulus, colored by orientation angle. PCA, Isomap, and MDS all recover the circular topology.}
-    \vspace{0.3cm}
-    \begin{itemize}
-        \item Circular manifold emerged in latent space
-        \item Similar orientations positioned close together
-        \item Orientation space represented as continuous ring
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Key Principles Demonstrated}
-    \begin{itemize}
-        \item \textbf{Manifold structure}: Low-dimensional manifold (circle) embedded in high-dimensional space
-        \item \textbf{Topological correspondence}: Manifold topology matches task space topology
-        \item \textbf{Continuous representation}: Similar stimuli mapped to nearby points
-        \item \textbf{Dimensionality reduction}: High-dimensional input compressed to essential variables
-    \end{itemize}
-    \vspace{0.5cm}
-    \begin{block}{Insight}
-        Circular topology emerged naturally through backpropagation—the network discovered that a circular representation is the most efficient way to encode a periodic variable
-    \end{block}
-\end{frame}
-
-\begin{frame}{Biological Neural Networks}
-    % Placeholder for biological neural networks content
-    \begin{itemize}
-        \item Application of geometric principles to biological neural data
-        \item Mouse visual cortex encodes orientation information
-        \item Populations of neurons collectively form a ring-shaped manifold
-        \item Manifold geometry reflects circular topology of orientation space
-        \item Comparison with artificial neural network findings reveals common principles
-    \end{itemize}
-\end{frame}
-
-% Conclusion section
-\section{Conclusion}
-
-\begin{frame}{Conclusion}
-    \begin{itemize}
-        \item Neural population geometry provides a unified framework for understanding neural computation
-        \item Circular manifolds arise naturally from computational demands of the task
-        \item Similar geometric structures emerge in both biological and artificial systems
-        \item Comparative approach reveals common principles:
+\begin{frame}{Properties of interest}
+    \begin{columns}
+        \column{0.3\textwidth}
         \begin{itemize}
             \item Dimensionality
             \item Curvature
-            \item Topological structure
+            \item Separability
+            \item Capacity
         \end{itemize}
-        \item Insights into fundamental computational strategies that transcend specific neural implementations
-    \end{itemize}
+        \column{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=\textwidth]{figs/capacity.png}
+            \cite{chung2021neural}
+        \end{center}
+    \end{columns}
 \end{frame}
 
-\begin{frame}{References}
-    \begin{thebibliography}{10}
-        \bibitem{demas2021high} Demas, J. et al. (2021). High-speed, cortex-wide volumetric recording of neuroactivity.
-        \bibitem{yuste2015neuron} Yuste, R. (2015). From the neuron doctrine to neural networks.
-        \bibitem{saxena2019towards} Saxena, S. \& Cunningham, J. P. (2019). Towards the neural population doctrine.
-        \bibitem{chung2021neural} Chung, S. \& Abbott, L. F. (2021). Neural population geometry: An approach for understanding biological and artificial neural networks.
-        \bibitem{chaudhuri2019intrinsic} Chaudhuri, R. et al. (2019). Intrinsic dimension of data representations in deep neural networks.
-        \bibitem{beshkov2024topological} Beshkov, Y. et al. (2024). Topological analysis of neural representations.
-        \bibitem{Perich2024} Perich, M. G. et al. (2024). Neural manifolds and population dynamics.
-    \end{thebibliography}
+\section{Neural geometry of an ANN}
+
+\begin{frame}{Task input}
+    \includegraphics[width=\textwidth]{results/grating_samples.pdf}
 \end{frame}
 
+\begin{frame}{Architecture}
+    \begin{center}
+    \begin{tikzpicture}[
+        node distance=1.2cm,
+        box/.style={
+            rectangle,
+            draw,
+            minimum width=2cm,
+            minimum height=0.8cm,
+            align=center,
+            rounded corners,
+            font=\small
+        },
+        arrow/.style={
+            ->,
+            thick,
+            >=stealth
+        }
+    ]
+
+    % Input layer
+    \node[box] (input) {Input\\28$\times$28};
+
+    % First conv block
+    \node[box, right=of input] (conv1) {Conv2D\\3$\times$3, 16};
+    \node[box, right=of conv1] (pool1) {MaxPool2D\\2$\times$2};
+
+    % Second conv block
+    \node[box, below=0.8cm of input] (conv2) {Conv2D\\3$\times$3, 32};
+    \node[box, right=of conv2] (pool2) {MaxPool2D\\2$\times$2};
+
+    % Flatten and FC layers
+    \node[box, right=of pool2] (flatten) {Flatten};
+    \node[box, right=of flatten] (fc1) {Linear\\$\rightarrow$ 128};
+    
+    % Second row of FC layers
+    \node[box, below=0.8cm of conv2] (fc2) {Linear\\$\rightarrow$ 388};
+    \node[box, right=of fc2] (output_raw) {Linear\\$\rightarrow$ 2};
+    \node[box, right=of output_raw] (output_norm) {Normalize\\to unit circle};
+
+    % Connections - modified to create column-like flow
+    \draw[arrow] (input) -- (conv1);
+    \draw[arrow] (conv1) -- (pool1);
+    
+    % Modified connections to go down and then across instead of diagonal
+    \draw[arrow] (pool1) -- ++(0,-0.8cm) -| (conv2);
+    \draw[arrow] (conv2) -- (pool2);
+    \draw[arrow] (pool2) -- (flatten);
+    \draw[arrow] (flatten) -- (fc1);
+    
+    % Modified connection to go down and then across
+    \draw[arrow] (fc1) -- ++(0,-0.8cm) -| (fc2);
+    \draw[arrow] (fc2) -- (output_raw);
+    \draw[arrow] (output_raw) -- (output_norm);
+
+    % Add dimensions as labels
+    \node[above=0.01cm of pool1, font=\footnotesize] {14$\times$14$\times$16};
+    \node[above=0.01cm of pool2, font=\footnotesize] {7$\times$7$\times$32};
+    \node[below=0.01cm of fc2, font=\footnotesize] {Latent Space };
+    \node[below=0.01cm of output_norm, font=\footnotesize] {(cos 2$\theta$, sin $2\theta$)};
+
+    \end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{Analysis of latent space activity}
+    \[
+\underbrace{
+\begin{bmatrix}
+    \circ & \circ & \cdots & \circ \\
+    \circ & \circ & \cdots & \circ \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \circ & \circ & \cdots & \circ
+\end{bmatrix}}_{388 \times 18}
+\quad
+\overset{\text{PCA}}{\longrightarrow}
+\quad
+\underbrace{
+\begin{bmatrix}
+    \circ & \circ & \cdots & \circ \\
+    \circ & \circ & \cdots & \circ
+\end{bmatrix}}_{2 \times 18}
+\]
+\end{frame}
+
+\begin{frame}{PCA projection reveals directional circular structure}
+    \begin{center}
+        \includegraphics[width=0.6\textwidth,trim={0 1cm 0 1cm},clip]{results/ann_circular_colormap_visualization.pdf} 
+    \end{center}
+\end{frame}
+
+\section{Neural geometry of a biological neural circuit}
+
+\section{Conclusions}
+
+\section{References}
+\begin{frame}[allowframebreaks]{References}
+    \bibliographystyle{apalike}
+\bibliography{refs}
+\end{frame}
 \end{document} 
